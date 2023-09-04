@@ -14,8 +14,8 @@ data_items:
 .section .text
 .globl _start
 _start:
-mov1 $0, %edi #move 0 into the index register
-movl data_items(.%edi,4), %eax #load the first byte of data
+movl $0, %edi #move 0 into the index register
+movl data_items(,%edi,4), %eax #load the first byte of data
 movl %eax, %ebx
 
 start_loop:
@@ -25,6 +25,9 @@ incl %edi
 movl data_items(,%edi,4), %eax
 cmpl %ebx, %eax
 jle start_loop
+
+movl %eax, %ebx
+jmp start_loop
 
 loop_exit:
 # %ebx is the return balue, it already has the number in it
